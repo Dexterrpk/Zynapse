@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: zynapse-web
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn zynapse.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: zynapse.settings
+      - key: SECRET_KEY
+        value: sua_chave_secreta
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+databases:
+  - name: zynapse-db
