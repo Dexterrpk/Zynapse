@@ -1,1 +1,37 @@
-<!-- Frontend HTML -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Zynapse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Bem-vindo ao Zynapse</h1>
+    <form id="msgForm">
+        <input type="text" id="name" placeholder="Nome do cliente" required>
+        <input type="text" id="message" placeholder="Mensagem recebida" required>
+        <input type="text" id="product" placeholder="Produto">
+        <input type="text" id="price" placeholder="Preço">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById("msgForm").onsubmit = async function (e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const message = document.getElementById("message").value;
+            const product = document.getElementById("product").value;
+            const price = document.getElementById("price").value;
+
+            const res = await fetch("http://localhost:5000/api/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, message, business_info: { product, price } })
+            });
+
+            const result = await res.json();
+            alert("Resposta: " + result.response);
+        }
+    </script>
+</body>
+</html>
